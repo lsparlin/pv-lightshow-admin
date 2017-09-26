@@ -1,0 +1,44 @@
+{
+  "name": "lewismsparlin",
+  "version": "1.0.0",
+  "description": "Lewis Sparlin Home",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack -d; webpack-dev-server",
+    "build": "webpack -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lsparlin/lsparlin.github.io.git"
+  },
+  "author": "Lewis Sparlin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lsparlin/lsparlin.github.io/issues"
+  },
+  "homepage": "https://github.com/lsparlin/lsparlin.github.io#readme",
+  "devDependencies": {
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5"
+  },
+  "dependencies": {
+    "axios": "^0.16.2",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.28.1",
+    "dateformat": "^2.0.0",
+    "jsx-transform": "^2.3.0",
+    "node-sass": "^4.5.2",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "sass-loader": "^6.0.5",
+    "style-loader": "^0.17.0"
+  }
+}
