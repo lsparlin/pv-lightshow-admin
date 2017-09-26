@@ -1,0 +1,15 @@
+@import "./font-size.scss";
+@import "./margins.scss";
+@import "./helpers.scss";
+
+@import "./components/sequence/SequenceControl";
+@import "./components/sequence/SequencePreview";
+
+.container {
+  max-width: 1200px;
+  @media (min-width: 550px) {
+    width: 85%;
+  }
+  
+}
+

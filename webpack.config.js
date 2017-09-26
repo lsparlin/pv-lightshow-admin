@@ -16,6 +16,7 @@ module.exports = {
       extensions: ['.js', '.jsx'],
       alias: {
         'style': __dirname + '/src/style',
+        'scss': __dirname + '/src/scss',
         'components': __dirname + '/src/js/components',
         'sequence': __dirname + '/src/js/components/sequence',
         'config': path.resolve(__dirname, 'app.config.js')

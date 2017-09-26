@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import axios from 'axios';
+
+import SequencePreview from 'sequence/SequencePreview'
 
 let sequenceApi = ENV.sequenceApi || 'http://localhost:3000'
 
@@ -26,13 +29,27 @@ class SequenceControl extends React.Component {
   render() {
     return (
       <div className="SequenceControl">
-        <h3> Sequences </h3>
-        <div>
+        <div className="row">
+          <h3 className="eleven columns"> Sequences </h3>
+          <div className="one column"> <Link to="/create" className="button button-primary float-right">Create Sequence</Link> </div>
+        </div>
+        <div className="header row">
+            <div className="two columns"> Sequence </div>
+            <div className="two columns"> Length </div>
+            <div className="five columns"> Preview </div>
+            <div className="three columns"> </div>
+        </div>
           { this.state.sequences.map(sequence => 
-              ( <p key={sequence._id}><button onClick={() => this.startSequence(sequence.name)}>{sequence.name}</button></p> )
+              ( 
+                  <div className="row" key={sequence._id}>
+                    <div className="two columns">{sequence.name}</div>
+                    <div className="two columns"> {sequence.colorSequence.reduce((sum, next) => sum + next.duration, 0)}s </div>
+                    <div className="five columns"> <SequencePreview colorSequence={sequence.colorSequence} /> </div>
+                    <div className="three columns"><button onClick={() => this.startSequence(sequence.name)}>{'Run '  + sequence.name}</button></div>
+                  </div> 
+              )
             )
           }
-        </div>
       </div>
     )
   }
