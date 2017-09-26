@@ -10,6 +10,10 @@ function initSequence() {
   }
 }
 
+function resetUnsavedColorDuration() {
+  return { type: 'RESET_UNSAVED_CD' } 
+}
+
 function setProperty(propertyName, newValue) {
   return {
     type: 'SET_PROPERTY',
@@ -20,17 +24,29 @@ function setProperty(propertyName, newValue) {
   }
 }
 
-function addColorDuration(color, duration) {
+function setColorDurationProperty(propertyName, newValue) {
+  return {
+    type: 'SET_CD_PROPERTY',
+    data: {
+      name: propertyName,
+      value: newValue
+    }
+  }
+}
+
+function addColorDuration(colorDuration) {
   return {
     type: 'ADD_COLOR_DURATION',
     data: {
-      colorDuration: new ColorDuration(color, duration)
+      colorDuration: colorDuration
     }
   }
 }
 
 export {
   initSequence,
+  resetUnsavedColorDuration,
   setProperty,
+  setColorDurationProperty,
   addColorDuration
 }

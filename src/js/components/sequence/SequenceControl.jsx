@@ -15,15 +15,12 @@ class SequenceControl extends React.Component {
 
   componentWillMount() {
     axios.get(sequenceApi + '/testdb').then(response => {
-      console.log(response.data)
       this.setState({sequences: response.data})
     })
   }
 
   startSequence(name) {
-    axios.put(sequenceApi + '/sequence/' + name).then(response => {
-      console.log(response)
-    })
+    axios.put(sequenceApi + '/sequence/' + name)
   }
 
   render() {

@@ -2,15 +2,13 @@ import React from 'react';
 import axios from 'axios';
 
 import SequenceFormStore from 'stores/SequenceFormStore'
-import { setProperty, addColorDuration }  from 'actions/SequenceFormActions'
+import { setProperty, setColorDurationProperty, addColorDuration, resetUnsavedColorDuration }  from 'actions/SequenceFormActions'
 
 class SequenceCreate extends React.Component {
   constructor(props) {
     super(props)
     this.state = SequenceFormStore.getState()
     this.unsubscribe = undefined
-    this.onFormSubmit = this.onFormSubmit.bind(this)
-    this.onNameChange = this.onNameChange.bind(this)
   }
   componentWillMount() {
     this.unsubscribe = SequenceFormStore.subscribe(() => {
@@ -21,13 +19,26 @@ class SequenceCreate extends React.Component {
     this.unsubscribe()
   }
 
-  onNameChange({target}) {
+  onPropertyChange({target}) {
     SequenceFormStore.dispatch(setProperty(target.id, target.value))
+  }
+  onCdPropertyChange({target}) {
+    SequenceFormStore.dispatch(setColorDurationProperty(target.id, target.value))
+  }
+  addUnsavedColorDuration(event) {
+    event && event.preventDefault()
+    let colorDuration = SequenceFormStore.getState().unsavedColorDuration
+    SequenceFormStore.dispatch(addColorDuration(colorDuration))
+    SequenceFormStore.dispatch(resetUnsavedColorDuration())
   }
   onFormSubmit(event) {
     event && event.preventDefault()
-    let httpMethod = 'PUT' 
-    console.log('putting ', {sequence: SequenceFormStore.getState()})
+    let state = SequenceFormStore.getState()
+    console.log('putting ', {sequence: {
+        name: state.name,
+        colorSequence: state.colorSequence
+      }
+    })
   }
 
   render() {
@@ -37,33 +48,50 @@ class SequenceCreate extends React.Component {
     return (
       <div className="SequenceCreate">
         <h3>New Sequence</h3>
-        <form onSubmit={this.onFormSubmit}>
+        <div>
 
           <div className="row">
             <div className="two columns">
               <label htmlFor="name">Sequence Name</label>
             </div>
             <div className="eight columns">
-              <input type="text" className="u-full-width" id="name" value={this.state.name} onChange={this.onNameChange} />
+              <input type="text" className="u-full-width" id="name" value={this.state.name} onChange={this.onPropertyChange} />
             </div>
           </div>
 
           <div className="row">
+            <div className="two columns">
+              <label> Colors </label>
+            </div>
+            <div className="eight columns">
             { this.state.colorSequence.map( (seqItem, index) => (
                   <p key={index}>color: {seqItem.color}</p>
                 )
               )
             }
+            </div>
           </div>
           <div className="row">
-            <p> Make a new Color Duration </p>
+            <div className="two columns"> &nbsp; </div>
+            <div className="three columns">
+              <label htmlFor="color">Color HEX</label>
+              <input type="text" className="u-full-width" id="color" value={this.state.unsavedColorDuration.color} onChange={this.onCdPropertyChange} />
+            </div>
+            <div className="three columns">
+              <label htmlFor="duration">Duration (seconds)</label>
+              <input type="number" className="u-full-width" id="duration" value={this.state.unsavedColorDuration.duration} onChange={this.onCdPropertyChange} />
+            </div>
+            <div className="two columns">
+              <button onClick={this.addUnsavedColorDuration}>Add</button>
+            </div>
           </div>
 
+          <hr />
           <div className="row">
-            <button type="submit" className="button-primary">Save</button>
+            <button className="button-primary float-right" onClick={this.onFormSubmit}>Save</button>
           </div>
 
-        </form>
+        </div>
       </div>
     )
   }
