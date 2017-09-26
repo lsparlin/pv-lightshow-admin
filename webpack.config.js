@@ -19,6 +19,9 @@ module.exports = {
         'scss': __dirname + '/src/scss',
         'components': __dirname + '/src/js/components',
         'sequence': __dirname + '/src/js/components/sequence',
+        'stores': __dirname + '/src/js/stores',
+        'actions': __dirname + '/src/js/actions',
+        'reducers': __dirname + '/src/js/reducers',
         'config': path.resolve(__dirname, 'app.config.js')
       }
     },

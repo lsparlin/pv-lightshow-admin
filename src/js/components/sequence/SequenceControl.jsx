@@ -33,23 +33,22 @@ class SequenceControl extends React.Component {
           <h3 className="eleven columns"> Sequences </h3>
           <div className="one column"> <Link to="/create" className="button button-primary float-right">Create Sequence</Link> </div>
         </div>
-        <div className="header row">
-            <div className="two columns"> Sequence </div>
-            <div className="two columns"> Length </div>
-            <div className="five columns"> Preview </div>
-            <div className="three columns"> </div>
-        </div>
-          { this.state.sequences.map(sequence => 
-              ( 
-                  <div className="row" key={sequence._id}>
-                    <div className="two columns">{sequence.name}</div>
-                    <div className="two columns"> {sequence.colorSequence.reduce((sum, next) => sum + next.duration, 0)}s </div>
-                    <div className="five columns"> <SequencePreview colorSequence={sequence.colorSequence} /> </div>
-                    <div className="three columns"><button onClick={() => this.startSequence(sequence.name)}>{'Run '  + sequence.name}</button></div>
-                  </div> 
-              )
-            )
-          }
+        { this.state.sequences.map(sequence => 
+          (
+            <div key={sequence._id} className="sequence row">
+                <div className="three columns">
+                  <h4>{sequence.name} </h4>
+                </div>
+                <div className="six columns">
+                  Duration: {sequence.colorSequence.reduce((sum, next) => sum + next.duration, 0)}s
+                  <SequencePreview colorSequence={sequence.colorSequence} />
+                 </div>
+                <div className="three columns">
+                  <button onClick={() => this.startSequence(sequence.name)}>{'Run '  + sequence.name}</button>
+                </div>
+            </div>
+          ))
+        }
       </div>
     )
   }
