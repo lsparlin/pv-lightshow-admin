@@ -26,7 +26,7 @@ class SequenceControl extends React.Component {
   render() {
     return (
       <div className="SequenceControl">
-        <h3>Sequences</h3>
+        <h3> Sequences </h3>
         <div>
           { this.state.sequences.map(sequence => 
               ( <p key={sequence._id}><button onClick={() => this.startSequence(sequence.name)}>{sequence.name}</button></p> )

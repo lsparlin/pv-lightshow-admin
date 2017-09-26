@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
-import SequenceControl from 'components/SequenceControl'
+import SequenceControl from 'sequence/SequenceControl'
 
 const HomePage = (props) => (
   <BrowserRouter>

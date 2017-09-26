@@ -17,6 +17,7 @@ module.exports = {
       alias: {
         'style': __dirname + '/src/style',
         'components': __dirname + '/src/js/components',
+        'sequence': __dirname + '/src/js/components/sequence',
         'config': path.resolve(__dirname, 'app.config.js')
       }
     },
