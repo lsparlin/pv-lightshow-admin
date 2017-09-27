@@ -1,14 +1,20 @@
 import React from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router';
+
+import SequencePreview from 'sequence/SequencePreview'
 
 import SequenceFormStore from 'stores/SequenceFormStore'
 import { setProperty, setColorDurationProperty, addColorDuration, resetUnsavedColorDuration }  from 'actions/SequenceFormActions'
+
+let sequenceApi = ENV.sequenceApi || 'http://localhost:3000'
 
 class SequenceCreate extends React.Component {
   constructor(props) {
     super(props)
     this.state = SequenceFormStore.getState()
     this.unsubscribe = undefined
+    this.onFormSubmit = this.onFormSubmit.bind(this)
   }
   componentWillMount() {
     this.unsubscribe = SequenceFormStore.subscribe(() => {
@@ -34,11 +40,11 @@ class SequenceCreate extends React.Component {
   onFormSubmit(event) {
     event && event.preventDefault()
     let state = SequenceFormStore.getState()
-    console.log('putting ', {sequence: {
-        name: state.name,
-        colorSequence: state.colorSequence
-      }
-    })
+     axios.put(sequenceApi + '/sequence', { sequence: {
+         name: state.name,
+         colorSequence: state.colorSequence
+       }
+     }).then(() => this.props.history.push('/'))
   }
 
   render() {
@@ -65,7 +71,11 @@ class SequenceCreate extends React.Component {
             </div>
             <div className="eight columns">
             { this.state.colorSequence.map( (seqItem, index) => (
-                  <p key={index}>color: {seqItem.color}</p>
+                  <div key={index}>
+                    color: #{seqItem.color} 
+                    <span className="color-swatch" style={{backgroundColor: '#' + seqItem.color}}> &nbsp; </span>
+                    {seqItem.duration} seconds
+                  </div>
                 )
               )
             }
@@ -88,6 +98,7 @@ class SequenceCreate extends React.Component {
 
           <hr />
           <div className="row">
+            <SequencePreview colorSequence={this.state.colorSequence} />
             <button className="button-primary float-right" onClick={this.onFormSubmit}>Save</button>
           </div>
 
@@ -98,4 +109,4 @@ class SequenceCreate extends React.Component {
 }
 
 
-export default SequenceCreate
+export default withRouter(SequenceCreate)

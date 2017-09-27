@@ -14,7 +14,10 @@ export default (state, action) => {
       return newState
     case 'SET_CD_PROPERTY':
       let cdData = action.data
-      var newColorDuration = Object.assign(state.unsavedColorDuration, {[cdData.name]: cdData.value})
+      let value = cdData.value
+      if (cdData.name === 'duration') 
+        value = parseInt(value)
+      var newColorDuration = Object.assign(state.unsavedColorDuration, {[cdData.name]: value})
       var newState = Object.assign(state, {unsavedColorDuration: newColorDuration})
       return newState
     case 'ADD_COLOR_DURATION':
