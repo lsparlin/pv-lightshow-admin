@@ -62,6 +62,14 @@ class SequenceCreate extends React.Component {
     return (
       <div className="SequenceCreate">
         <h3>New Sequence</h3>
+        <div className="row">
+          <div className="two columns"> 
+            <label> Preview </label>
+          </div>
+          <div className="eight columns">
+            <SequencePreview colorSequence={this.state.colorSequence} />
+          </div>
+        </div>
         <div>
 
           <div className="row">
@@ -73,23 +81,10 @@ class SequenceCreate extends React.Component {
             </div>
           </div>
 
-          <div className="row">
+          <div className="row margin-top-1m">
             <div className="two columns">
               <label> Colors </label>
             </div>
-            <div className="eight columns">
-            { this.state.colorSequence.map( (seqItem, index) => (
-                  <div key={index} className="color-duration">
-                    <span className="color-swatch" style={{backgroundColor: '#' + seqItem.color}}> &nbsp; </span>
-                    <strong>{seqItem.duration} seconds</strong>
-                  </div>
-                )
-              )
-            }
-            </div>
-          </div>
-          <div className="row">
-            <div className="two columns"> &nbsp; </div>
             <div className="three columns">
               <ChromePicker color={this.state.unsavedColorDuration.color} onChangeComplete={this.onColorChange} />
             </div>
@@ -102,9 +97,24 @@ class SequenceCreate extends React.Component {
             </div>
           </div>
 
+          <div className="row">
+            <div className="two columns">
+              <label> &nbsp; </label>
+            </div>
+            <div className="eight columns">
+            { this.state.colorSequence.map( (seqItem, index) => (
+                  <div key={index} className="color-duration">
+                    <span className="color-swatch" style={{backgroundColor: '#' + seqItem.color}}> &nbsp; </span>
+                    <strong>{seqItem.duration} seconds</strong>
+                  </div>
+                )
+              )
+            }
+            </div>
+          </div>
+
           <hr />
           <div className="row">
-            <SequencePreview colorSequence={this.state.colorSequence} />
             <button className="button-primary float-right" onClick={this.onFormSubmit}>Save</button>
           </div>
 
