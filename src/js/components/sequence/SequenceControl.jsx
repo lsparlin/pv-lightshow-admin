@@ -7,10 +7,13 @@ import SequencePreview from 'sequence/SequencePreview'
 
 let sequenceApi = ENV.sequenceApi || 'http://localhost:3000'
 
+const totalDuration = (sequence) =>  sequence.colorSequence.reduce((sum, next) => sum + next.duration, 0)
+
 class SequenceControl extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {sequences: []};
+    this.state = {sequences: [], enableButtons: true};
+    this.startSequence = this.startSequence.bind(this)
   }
 
   componentWillMount() {
@@ -20,7 +23,14 @@ class SequenceControl extends React.Component {
   }
 
   startSequence(name) {
-    axios.put(sequenceApi + '/sequence/' + name)
+    axios.put(sequenceApi + '/sequence/' + name).then(() => {
+      this.setState({enableButtons: false})
+      var sequence = this.state.sequences.find(item => item.name === name)
+      var total = totalDuration(sequence)
+      setTimeout(() => {
+        this.setState({enableButtons: true})
+      }, total * 1000)
+    })
   }
 
   render() {
@@ -37,11 +47,11 @@ class SequenceControl extends React.Component {
                   <h4>{sequence.name} </h4>
                 </div>
                 <div className="six columns">
-                  Duration: {sequence.colorSequence.reduce((sum, next) => sum + next.duration, 0)}s
+                  Duration: {totalDuration(sequence)}s
                   <SequencePreview colorSequence={sequence.colorSequence} />
                  </div>
                 <div className="three columns">
-                  <button onClick={() => this.startSequence(sequence.name)}>{'Run '  + sequence.name}</button>
+                  <button disabled={!this.state.enableButtons} onClick={() => this.startSequence(sequence.name)}>{'Run '  + sequence.name}</button>
                 </div>
             </div>
           ))
