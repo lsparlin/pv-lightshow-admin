@@ -38,17 +38,21 @@ class SequenceCreate extends React.Component {
   addUnsavedColorDuration(event) {
     event && event.preventDefault()
     let colorDuration = SequenceFormStore.getState().unsavedColorDuration
-    SequenceFormStore.dispatch(addColorDuration(colorDuration))
-    SequenceFormStore.dispatch(resetUnsavedColorDuration())
+    if (colorDuration.duration) {
+      SequenceFormStore.dispatch(addColorDuration(colorDuration))
+      SequenceFormStore.dispatch(resetUnsavedColorDuration())
+    }
   }
   onFormSubmit(event) {
     event && event.preventDefault()
     let state = SequenceFormStore.getState()
+    if (state.name && state.colorSequence.length > 2) {
      axios.put(sequenceApi + '/sequence', { sequence: {
          name: state.name,
          colorSequence: state.colorSequence
        }
      }).then(() => this.props.history.push('/'))
+    }
   }
 
   render() {
