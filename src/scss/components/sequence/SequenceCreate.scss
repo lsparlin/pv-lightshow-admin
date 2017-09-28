@@ -1,8 +1,14 @@
 .SequenceCreate {
 
-  span.color-swatch {
-    padding: 1px 6px;
-    margin: 0 2px;
-    border-radius: 5px;
+  .color-duration {
+    margin: 1em 0;
+
+   span.color-swatch {
+     display: inline-block;
+     width: 80%;
+     margin-right: 5px;
+     border: 1px solid #CCC;
+     border-radius: 5px;
+   }
   }
 }

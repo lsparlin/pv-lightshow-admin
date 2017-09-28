@@ -1,4 +1,5 @@
 import React from 'react';
+import { ChromePicker } from 'react-color';
 import axios from 'axios';
 import { withRouter } from 'react-router';
 
@@ -30,6 +31,9 @@ class SequenceCreate extends React.Component {
   }
   onCdPropertyChange({target}) {
     SequenceFormStore.dispatch(setColorDurationProperty(target.id, target.value))
+  }
+  onColorChange(color) {
+    SequenceFormStore.dispatch(setColorDurationProperty('color', color.hex.replace('#', '')))
   }
   addUnsavedColorDuration(event) {
     event && event.preventDefault()
@@ -71,10 +75,9 @@ class SequenceCreate extends React.Component {
             </div>
             <div className="eight columns">
             { this.state.colorSequence.map( (seqItem, index) => (
-                  <div key={index}>
-                    color: #{seqItem.color} 
+                  <div key={index} className="color-duration">
                     <span className="color-swatch" style={{backgroundColor: '#' + seqItem.color}}> &nbsp; </span>
-                    {seqItem.duration} seconds
+                    <strong>{seqItem.duration} seconds</strong>
                   </div>
                 )
               )
@@ -84,8 +87,7 @@ class SequenceCreate extends React.Component {
           <div className="row">
             <div className="two columns"> &nbsp; </div>
             <div className="three columns">
-              <label htmlFor="color">Color HEX</label>
-              <input type="text" className="u-full-width" id="color" value={this.state.unsavedColorDuration.color} onChange={this.onCdPropertyChange} />
+              <ChromePicker color={this.state.unsavedColorDuration.color} onChangeComplete={this.onColorChange} />
             </div>
             <div className="three columns">
               <label htmlFor="duration">Duration (seconds)</label>

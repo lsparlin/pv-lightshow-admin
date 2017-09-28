@@ -35,6 +35,7 @@
     "jsx-transform": "^2.3.0",
     "node-sass": "^4.5.2",
     "react": "^15.5.4",
+    "react-color": "^2.13.8",
     "react-dom": "^15.5.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
