@@ -11,6 +11,10 @@
   @media (min-width: 550px) {
     width: 85%;
   }
+
+  button[disabled] {
+    color: #BBB;
+  }
   
 }
 
