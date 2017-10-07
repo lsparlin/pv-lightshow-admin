@@ -18,6 +18,8 @@ class SequenceCreate extends React.Component {
     this.onFormSubmit = this.onFormSubmit.bind(this)
   }
   componentWillMount() {
+    axios.get(sequenceApi, {withCredentials: true}).catch(() => this.props.history.push('/login'))
+
     this.unsubscribe = SequenceFormStore.subscribe(() => {
       this.setState(SequenceFormStore.getState())
     })
@@ -51,7 +53,7 @@ class SequenceCreate extends React.Component {
          name: state.name,
          colorSequence: state.colorSequence
        }
-     }).then(() => this.props.history.push('/'))
+     }, {withCredentials: true}).then(() => this.props.history.push('/'))
     }
   }
 

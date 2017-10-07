@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import axios from 'axios';
 
@@ -17,13 +18,13 @@ class SequenceControl extends React.Component {
   }
 
   componentWillMount() {
-    axios.get(sequenceApi + '/testdb').then(response => {
+    axios.get(sequenceApi + '/sequence', {withCredentials: true}).then(response => {
       this.setState({sequences: response.data})
-    })
+    }).catch(() => this.props.history.push('/login'))
   }
 
   startSequence(name) {
-    axios.put(sequenceApi + '/sequence/' + name).then(() => {
+    axios.put(sequenceApi + '/sequence/' + name, {}, {withCredentials: true}).then(() => {
       this.setState({enableButtons: false})
       var sequence = this.state.sequences.find(item => item.name === name)
       var total = totalDuration(sequence)
@@ -61,4 +62,4 @@ class SequenceControl extends React.Component {
   }
 }
 
-export default SequenceControl
+export default withRouter(SequenceControl)
