@@ -23,7 +23,7 @@ const LoginPage = (props) => {
   }
   
   return (
-    <div>
+    <div className="LoginPage">
       <h2>Login</h2>
       <form onSubmit={onFormSubmit}>
         <div className="row">
