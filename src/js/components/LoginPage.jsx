@@ -1,8 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router'
-import axios from 'axios'
 
-let sequenceApi = ENV.sequenceApi || 'http://localhost:3000'
+import Requests from 'helpers/Requests'
 
 const LoginPage = (props) => {
 
@@ -15,7 +14,7 @@ const LoginPage = (props) => {
       console.log(key, formData.get(key))
       formBody = Object.assign(formBody, {[key]: formData.get(key)})
     }
-    axios.post(sequenceApi + '/login', formBody, {withCredentials: true}).then(response => {
+    Requests.post('/login', formBody).then(response => {
       console.log(response)
       props.history.push('/')
     }).catch(() => {

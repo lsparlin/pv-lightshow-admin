@@ -22,6 +22,7 @@ module.exports = {
         'stores': __dirname + '/src/js/stores',
         'actions': __dirname + '/src/js/actions',
         'reducers': __dirname + '/src/js/reducers',
+        'helpers': __dirname + '/src/js/helpers',
         'config': path.resolve(__dirname, 'app.config.js')
       }
     },

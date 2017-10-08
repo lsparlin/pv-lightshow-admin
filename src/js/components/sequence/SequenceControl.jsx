@@ -2,11 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
-import axios from 'axios';
-
+import Requests from 'helpers/Requests'
 import SequencePreview from 'sequence/SequencePreview'
-
-let sequenceApi = ENV.sequenceApi || 'http://localhost:3000'
 
 const totalDuration = (sequence) =>  sequence.colorSequence.reduce((sum, next) => sum + next.duration, 0)
 
@@ -18,13 +15,13 @@ class SequenceControl extends React.Component {
   }
 
   componentWillMount() {
-    axios.get(sequenceApi + '/sequence', {withCredentials: true}).then(response => {
+    Requests.get('/sequence').then(response => {
       this.setState({sequences: response.data})
     }).catch(() => this.props.history.push('/login'))
   }
 
   startSequence(name) {
-    axios.put(sequenceApi + '/sequence/' + name, {}, {withCredentials: true}).then(() => {
+    Requests.put('/sequence/' + name).then(() => {
       this.setState({enableButtons: false})
       var sequence = this.state.sequences.find(item => item.name === name)
       var total = totalDuration(sequence)

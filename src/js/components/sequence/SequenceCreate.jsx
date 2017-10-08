@@ -1,14 +1,12 @@
 import React from 'react';
 import { ChromePicker } from 'react-color';
-import axios from 'axios';
 import { withRouter } from 'react-router';
 
+import Requests from 'helpers/Requests'
 import SequencePreview from 'sequence/SequencePreview'
 
 import SequenceFormStore from 'stores/SequenceFormStore'
 import { setProperty, setColorDurationProperty, addColorDuration, resetUnsavedColorDuration }  from 'actions/SequenceFormActions'
-
-let sequenceApi = ENV.sequenceApi || 'http://localhost:3000'
 
 class SequenceCreate extends React.Component {
   constructor(props) {
@@ -18,7 +16,7 @@ class SequenceCreate extends React.Component {
     this.onFormSubmit = this.onFormSubmit.bind(this)
   }
   componentWillMount() {
-    axios.get(sequenceApi, {withCredentials: true}).catch(() => this.props.history.push('/login'))
+    Requests.get().catch(() => this.props.history.push('/login'))
 
     this.unsubscribe = SequenceFormStore.subscribe(() => {
       this.setState(SequenceFormStore.getState())
@@ -49,11 +47,11 @@ class SequenceCreate extends React.Component {
     event && event.preventDefault()
     let state = SequenceFormStore.getState()
     if (state.name && state.colorSequence.length > 2) {
-     axios.put(sequenceApi + '/sequence', { sequence: {
+     Requests.put('/sequence', { sequence: {
          name: state.name,
          colorSequence: state.colorSequence
        }
-     }, {withCredentials: true}).then(() => this.props.history.push('/'))
+     }).then(() => this.props.history.push('/'))
     }
   }
 
