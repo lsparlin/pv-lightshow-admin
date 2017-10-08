@@ -25,7 +25,7 @@ const LoginPage = (props) => {
   return (
     <div className="LoginPage">
       <h2>Login</h2>
-      <form onSubmit={onFormSubmit}>
+      <form onSubmit={onFormSubmit} action="/">
         <div className="row">
           <div className="four columns">
             <input name="username" type="text" placeholder="Username" className="u-full-width" />
