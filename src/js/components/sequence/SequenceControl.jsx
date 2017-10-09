@@ -6,12 +6,13 @@ import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'r
 
 import Requests from 'helpers/Requests'
 import SequencePreview from 'sequence/SequencePreview'
+import SequenceActionsButtonGroup from 'sequence/SequenceActionsButtonGroup'
 
 const totalDuration = (sequence) =>  sequence.colorSequence.reduce((sum, next) => sum + next.duration, 0)
 
 const DragHandle = SortableHandle( ({className}) => <span className={className + ' fa fa-bars'}></span>)
 
-const SequenceItem = SortableElement( ({sequence, enableButtons, enableSort, startSequence}) => 
+const SequenceItem = SortableElement( ({sequence, itemIndex, enableButtons, enableSort, startSequence, onDelete}) => 
   <div className="sequence row">
       <div className="three columns">
         <h4> <DragHandle className={classNames({'drag-handle': true, 'hide': !enableSort})} /> {sequence.name} </h4>
@@ -21,15 +22,17 @@ const SequenceItem = SortableElement( ({sequence, enableButtons, enableSort, sta
         <SequencePreview colorSequence={sequence.colorSequence} />
        </div>
       <div className="three columns">
-        <button className="float-right" disabled={!enableButtons} onClick={() => startSequence(sequence.name)}>Run Sequence</button>
+        <SequenceActionsButtonGroup enableButtons={enableButtons} startSequence={() => startSequence(sequence.name)} onDelete={() => onDelete(sequence._id, itemIndex)} />
       </div>
   </div>
 )
 
-const SequenceList = SortableContainer( ({sequences, enableButtons, enableSort, startSequence}) => 
+const SequenceList = SortableContainer( ({sequences, enableButtons, enableSort, startSequence, onDelete}) => 
   <div className="sequence-list">
     { sequences.map( (sequence, index) => 
-      <SequenceItem key={`item-${index}`} index={index} sequence={sequence} enableButtons={enableButtons} enableSort={enableSort} startSequence={startSequence} />
+      <SequenceItem key={`item-${index}`} index={index} sequence={sequence} itemIndex={index} enableButtons={enableButtons} enableSort={enableSort} 
+        startSequence={startSequence} 
+        onDelete={onDelete} />
     )}
   </div>
 )
@@ -39,6 +42,7 @@ class SequenceControl extends React.Component {
     super(props);
     this.state = {sequences: [], enableButtons: true, enableSort: false};
     this.startSequence = this.startSequence.bind(this)
+    this.onDelete = this.onDelete.bind(this)
     this.onSortEnd = this.onSortEnd.bind(this)
     this.onEnableSort = this.onEnableSort.bind(this)
   }
@@ -57,6 +61,13 @@ class SequenceControl extends React.Component {
       setTimeout(() => {
         this.setState({enableButtons: true})
       }, total * 1000)
+    })
+  }
+  onDelete(sequenceId, arrayIndex) {
+    Requests.delete('/sequence/' + sequenceId).then(() => {
+      var splicedList = this.state.sequences
+      splicedList.splice(arrayIndex, 1)
+      this.setState({sequences: splicedList})
     })
   }
   onEnableSort() {
@@ -82,7 +93,8 @@ class SequenceControl extends React.Component {
         </div>
         <SequenceList sequences={this.state.sequences} enableButtons={this.state.enableButtons} enableSort={this.state.enableSort} useDragHandle={true} 
           onSortEnd={this.onSortEnd}
-          startSequence={this.startSequence} />
+          startSequence={this.startSequence} 
+          onDelete={this.onDelete} />
       </div>
     )
   }
