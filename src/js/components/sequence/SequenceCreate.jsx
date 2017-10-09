@@ -61,7 +61,9 @@ class SequenceCreate extends React.Component {
 
     return (
       <div className="SequenceCreate">
-        <h3>New Sequence</h3>
+        <div className="row">
+          <h3>New Sequence</h3>
+        </div>
         <div className="row">
           <div className="two columns"> 
             <label> Preview </label>
