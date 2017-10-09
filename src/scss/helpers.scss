@@ -3,15 +3,13 @@
   overflow-x: scroll;
 }
 
-@media (min-width: 750px) {
-  .float-left {
-    float: left;
-    margin-right: 2rem;
-  }
-  
-  .float-right {
-    float: right;
-    margin-left: 2rem;
-  }
+.float-left {
+  float: left;
+  margin-right: 2rem;
+}
+
+.float-right {
+  float: right;
+  margin-left: 2rem;
 }
 
