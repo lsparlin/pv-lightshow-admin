@@ -49,7 +49,7 @@ class SequenceControl extends React.Component {
                   <SequencePreview colorSequence={sequence.colorSequence} />
                  </div>
                 <div className="three columns">
-                  <button disabled={!this.state.enableButtons} onClick={() => this.startSequence(sequence.name)}>{'Run '  + sequence.name}</button>
+                  <button className="float-right" disabled={!this.state.enableButtons} onClick={() => this.startSequence(sequence.name)}>Run Sequence</button>
                 </div>
             </div>
           ))
