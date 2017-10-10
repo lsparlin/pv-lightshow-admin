@@ -11,7 +11,7 @@ class SequenceActionsButtonGroup extends React.Component {
     this.setState({isOpen: false})
   }
   toggle() {
-    this.setState({isOpen: !this.state.isOpen})
+    this.setState({isOpen: false})
   }
 
   render() {
