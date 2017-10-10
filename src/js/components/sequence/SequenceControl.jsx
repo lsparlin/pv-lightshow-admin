@@ -88,7 +88,9 @@ class SequenceControl extends React.Component {
           <h3 className="six columns"> Sequences </h3>
           <div className="six columns">
             <Link to="/create" className="button button-primary float-right">Create Sequence</Link> 
-            <button className="float-right" onClick={this.onEnableSort}> Sort {this.state.enableSort && 'Off' || 'On'} </button>
+            <button className="float-right" onClick={this.onEnableSort}> Sort&nbsp;
+              <span className={classNames({'fa fa-lg': true, 'fa-circle': this.state.enableSort, 'fa-circle-thin': !this.state.enableSort})}></span> 
+            </button>
           </div>
         </div>
         <SequenceList sequences={this.state.sequences} enableButtons={this.state.enableButtons} enableSort={this.state.enableSort} useDragHandle={true} 
