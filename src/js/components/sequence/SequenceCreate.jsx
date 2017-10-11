@@ -61,12 +61,14 @@ class SequenceCreate extends React.Component {
 
     return (
       <div className="SequenceCreate">
-        <h3>New Sequence</h3>
+        <div className="row">
+          <h3>New Sequence</h3>
+        </div>
         <div className="row">
           <div className="two columns"> 
             <label> Preview </label>
           </div>
-          <div className="eight columns">
+          <div className="ten columns">
             <SequencePreview colorSequence={this.state.colorSequence} />
           </div>
         </div>
@@ -76,7 +78,7 @@ class SequenceCreate extends React.Component {
             <div className="two columns">
               <label htmlFor="name">Sequence Name</label>
             </div>
-            <div className="eight columns">
+            <div className="ten columns">
               <input type="text" className="u-full-width" id="name" value={this.state.name} onChange={this.onPropertyChange} />
             </div>
           </div>
@@ -85,7 +87,7 @@ class SequenceCreate extends React.Component {
             <div className="two columns">
               <label> Colors </label>
             </div>
-            <div className="three columns">
+            <div className="five columns">
               <ChromePicker color={this.state.unsavedColorDuration.color} onChangeComplete={this.onColorChange} />
             </div>
             <div className="three columns">
@@ -101,7 +103,7 @@ class SequenceCreate extends React.Component {
             <div className="two columns">
               <label> &nbsp; </label>
             </div>
-            <div className="eight columns">
+            <div className="ten columns">
             { this.state.colorSequence.map( (seqItem, index) => (
                   <div key={index} className="color-duration">
                     <span className="color-swatch" style={{backgroundColor: '#' + seqItem.color}}> &nbsp; </span>

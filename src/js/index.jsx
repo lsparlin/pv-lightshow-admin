@@ -1,6 +1,6 @@
 require('style/normalize.css')
 require('style/skeleton.css')
-require('style/custom-bootstrap.min.css')
+// require('style/custom-bootstrap.min.css')
 
 require('scss/main.scss')
 
