@@ -22,7 +22,7 @@ const SequenceItem = SortableElement( ({sequence, itemIndex, enableButtons, enab
         <SequencePreview colorSequence={sequence.colorSequence} />
        </div>
       <div className="three columns">
-        <SequenceActionsButtonGroup enableButtons={enableButtons} startSequence={() => startSequence(sequence.name)} onDelete={() => onDelete(sequence._id, itemIndex)} />
+        <SequenceActionsButtonGroup enableButtons={enableButtons} startSequence={() => startSequence(sequence._id)} onDelete={() => onDelete(sequence._id, itemIndex)} />
       </div>
   </div>
 )
@@ -53,10 +53,10 @@ class SequenceControl extends React.Component {
     }).catch(() => this.props.history.push('/login'))
   }
 
-  startSequence(name) {
-    Requests.put('/sequence/' + name).then(() => {
+  startSequence(id) {
+    Requests.put('/sequence/' + id).then(() => {
       this.setState({enableButtons: false})
-      var sequence = this.state.sequences.find(item => item.name === name)
+      var sequence = this.state.sequences.find(item => item._id === id)
       var total = totalDuration(sequence)
       setTimeout(() => {
         this.setState({enableButtons: true})
