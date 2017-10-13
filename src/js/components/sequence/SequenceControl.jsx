@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import classNames from 'classnames';
+import { Button } from 'reactstrap';
 import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
 
 import Requests from 'helpers/Requests'
@@ -70,6 +71,9 @@ class SequenceControl extends React.Component {
       this.setState({sequences: splicedList})
     })
   }
+  onConcludeShow() {
+    Requests.put('/conclude')
+  }
   onEnableSort() {
     this.setState({enableSort: !this.state.enableSort})
   }
@@ -97,6 +101,17 @@ class SequenceControl extends React.Component {
           onSortEnd={this.onSortEnd}
           startSequence={this.startSequence} 
           onDelete={this.onDelete} />
+        <div className="sequence row">
+            <div className="three columns">
+              <h4> Conclude Show </h4>
+            </div>
+            <div className="six columns">
+              Users will be re-routed to the Liberty Light Show survey 
+             </div>
+            <div className="three columns">
+              <Button color="danger" className="float-right" onClick={this.onConcludeShow}>Conclude The Show</Button>
+            </div>
+        </div>
       </div>
     )
   }
