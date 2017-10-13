@@ -41,17 +41,11 @@ const SequenceList = SortableContainer( ({sequences, enableButtons, enableSort, 
 class SequenceControl extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {sequences: [], enableButtons: true, enableSort: false};
+    this.state = {sequences: props.sequences, enableButtons: true, enableSort: false};
     this.startSequence = this.startSequence.bind(this)
     this.onDelete = this.onDelete.bind(this)
     this.onSortEnd = this.onSortEnd.bind(this)
     this.onEnableSort = this.onEnableSort.bind(this)
-  }
-
-  componentWillMount() {
-    Requests.get('/sequence').then(response => {
-      this.setState({sequences: response.data})
-    }).catch(() => this.props.history.push('/login'))
   }
 
   startSequence(id) {

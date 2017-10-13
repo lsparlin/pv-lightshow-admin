@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 import LoginPage from 'components/LoginPage'
-import SequenceControl from 'sequence/SequenceControl'
+import SequenceHome from 'sequence/SequenceHome'
 import SequenceCreate from 'sequence/SequenceCreate'
 
 const HomePage = (props) => (
@@ -13,7 +13,7 @@ const HomePage = (props) => (
       <hr />
 
       <Switch>
-        <Route exact path="/" component={SequenceControl} />
+        <Route exact path="/" component={SequenceHome} />
         <Route path="/login" component={LoginPage} />
         <Route path="/create" component={SequenceCreate} />
       </Switch>
