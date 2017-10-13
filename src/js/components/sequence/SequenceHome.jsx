@@ -23,7 +23,7 @@ class SequenceHome extends React.Component {
         </div>
       )
     } else{
-      <SequenceControl sequences={this.state.sequences} />
+      return ( <SequenceControl sequences={this.state.sequences} /> )
     }
   }
 

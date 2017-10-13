@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
 import classNames from 'classnames';
 import { Button } from 'reactstrap';
 import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
@@ -111,4 +110,4 @@ class SequenceControl extends React.Component {
   }
 }
 
-export default withRouter(SequenceControl)
+export default SequenceControl
