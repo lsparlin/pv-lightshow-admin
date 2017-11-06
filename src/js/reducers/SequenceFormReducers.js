@@ -16,7 +16,7 @@ export default (state, action) => {
       let cdData = action.data
       let value = cdData.value
       if (cdData.name === 'duration') 
-        value = parseInt(value)
+        value = parseFloat(value)
       var newColorDuration = Object.assign(state.unsavedColorDuration, {[cdData.name]: value})
       var newState = Object.assign(state, {unsavedColorDuration: newColorDuration})
       return newState
