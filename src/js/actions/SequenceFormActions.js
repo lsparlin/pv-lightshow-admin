@@ -1,12 +1,13 @@
 import ColorDuration from 'sequence/ColorDuration'
 
 function initSequence() {
+  return { type: 'INIT_SEQUENCE' }
+}
+
+function setSequence(sequence) {
   return {
-    type: 'INIT_SEQUENCE',
-    data: {
-      name: '',
-      colorSequence: []
-    }
+    type: 'SET_SEQUENCE',
+    data: sequence
   }
 }
 
@@ -45,6 +46,7 @@ function addColorDuration(colorDuration) {
 
 export {
   initSequence,
+  setSequence,
   resetUnsavedColorDuration,
   setProperty,
   setColorDurationProperty,

@@ -1,9 +1,20 @@
 import ColorDuration from 'sequence/ColorDuration'
 
-export default (state, action) => {
+const getDefaultState = () => {
+  return {
+    name: '',
+    colorSequence: [],
+    unsavedColorDuration: new ColorDuration('', 0)
+  }
+}
+
+const reduceAction = (state, action) => {
   switch(action.type) {
     case 'INIT_SEQUENCE':
-      return {sequence: action.data.sequence}
+      return getDefaultState()
+    case 'SET_SEQUENCE':
+      let newState = Object.assign(action.data, {unsavedColorDuration: new ColorDuration('', 0)})
+      return newState
     case 'RESET_UNSAVED_CD':
       let emptyColorDur = new ColorDuration('', 0)
       var newState = Object.assign(state, {unsavedColorDuration: emptyColorDur})
@@ -31,3 +42,7 @@ export default (state, action) => {
   }
 }
 
+export default {
+  getDefaultState,
+  reduceAction
+}
