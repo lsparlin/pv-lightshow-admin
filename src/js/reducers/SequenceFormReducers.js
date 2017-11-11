@@ -1,10 +1,12 @@
 import ColorDuration from 'sequence/ColorDuration'
 
+const getDefaultDuration = () => new ColorDuration('000000', 0)
+
 const getDefaultState = () => {
   return {
     name: '',
     colorSequence: [],
-    unsavedColorDuration: new ColorDuration('', 0)
+    unsavedColorDuration: getDefaultDuration()
   }
 }
 
@@ -13,10 +15,10 @@ const reduceAction = (state, action) => {
     case 'INIT_SEQUENCE':
       return getDefaultState()
     case 'SET_SEQUENCE':
-      let newState = Object.assign(action.data, {unsavedColorDuration: new ColorDuration('', 0)})
+      let newState = Object.assign(action.data, {unsavedColorDuration: getDefaultDuration()})
       return newState
     case 'RESET_UNSAVED_CD':
-      let emptyColorDur = new ColorDuration('', 0)
+      let emptyColorDur = getDefaultDuration()
       var newState = Object.assign(state, {unsavedColorDuration: emptyColorDur})
       return newState
     case 'SET_PROPERTY':

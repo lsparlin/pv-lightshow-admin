@@ -1,7 +1,8 @@
 .SequenceCreate {
 
   .color-duration {
-    margin: 1em 0;
+    padding: 2px 0;
+    margin: 0.8em 0;
 
    span.color-swatch {
      display: inline-block;
@@ -10,5 +11,9 @@
      border: 1px solid #CCC;
      border-radius: 5px;
    }
+  }
+
+  .color-duration:hover {
+    background-color: #EEE;
   }
 }

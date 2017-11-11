@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 
 import Requests from 'helpers/Requests'
 import SequencePreview from 'sequence/SequencePreview'
+import ColorDuration from 'sequence/ColorDuration'
 
 import SequenceFormStore from 'stores/SequenceFormStore'
 import { setProperty, setColorDurationProperty, addColorDuration, resetUnsavedColorDuration }  from 'actions/SequenceFormActions'
@@ -13,6 +14,8 @@ class SequenceCreate extends React.Component {
     super(props)
     this.state = SequenceFormStore.getState()
     this.unsubscribe = undefined
+    this.setColorDurationEditMode = this.setColorDurationEditMode.bind(this)
+    this.setColorDurationAtIndex = this.setColorDurationAtIndex.bind(this)
     this.onFormSubmit = this.onFormSubmit.bind(this)
   }
   componentWillMount() {
@@ -42,6 +45,15 @@ class SequenceCreate extends React.Component {
       SequenceFormStore.dispatch(addColorDuration(colorDuration))
       SequenceFormStore.dispatch(resetUnsavedColorDuration())
     }
+  }
+  setColorDurationEditMode(index) {
+    this.setState({editDurationIndex: index})
+  }
+  setColorDurationAtIndex(event, index, color) {
+    let value = event.target.value
+    let newColorSequence = this.state.colorSequence
+    newColorSequence[index] = new  ColorDuration(color, parseFloat(value))
+    this.setState({colorSequence: newColorSequence})
   }
   onFormSubmit(event) {
     event && event.preventDefault()
@@ -85,7 +97,7 @@ class SequenceCreate extends React.Component {
               <label> Colors </label>
             </div>
             <div className="five columns">
-              <ChromePicker color={this.state.unsavedColorDuration.color} onChangeComplete={this.onColorChange} />
+              <ChromePicker color={this.state.unsavedColorDuration.color} onChangeComplete={this.onColorChange} disableAlpha={true} />
             </div>
             <div className="three columns">
               <label htmlFor="duration">Duration (seconds)</label>
@@ -101,12 +113,19 @@ class SequenceCreate extends React.Component {
               <label> &nbsp; </label>
             </div>
             <div className="ten columns">
-            { this.state.colorSequence.map( (seqItem, index) => (
-                  <div key={index} className="color-duration">
+            { this.state.colorSequence.map( (seqItem, index) => {
+                if (this.state.editDurationIndex === index) {
+                  return ( <div key={index} className="color-duration">
+                    <span className="color-swatch" style={{backgroundColor: '#' + seqItem.color}}> &nbsp; </span>
+                    <input type="number" value={seqItem.duration} onChange={(event) => this.setColorDurationAtIndex(event, index, seqItem.color)} />
+                  </div>)
+                } else {
+                  return ( <div key={index} className="color-duration" onClick={() => this.setColorDurationEditMode(index)}>
                     <span className="color-swatch" style={{backgroundColor: '#' + seqItem.color}}> &nbsp; </span>
                     <strong>{seqItem.duration} seconds</strong>
-                  </div>
-                )
+                  </div> )
+                }
+                }
               )
             }
             </div>
