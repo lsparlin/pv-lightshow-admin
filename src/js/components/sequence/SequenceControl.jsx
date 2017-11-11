@@ -87,11 +87,12 @@ class SequenceControl extends React.Component {
     this.setState({enableSort: !this.state.enableSort})
   }
   onSortEnd( {oldIndex, newIndex} ) {
-    this.setState({
-      sequences: arrayMove(this.state.sequences, oldIndex, newIndex)
+    let reordered = arrayMove(this.state.sequences, oldIndex, newIndex)
+      .map( (sequence, index) => Object.assign(sequence, { order_index: index}) )
+    var newOrderArray = reordered.map( sequence => ({id: sequence._id, order_index: sequence.order_index}) )
+    Requests.put('/sequence/reorder', { sequenceOrder: newOrderArray }).then(() => {
+      this.setState({ sequences: reordered })
     })
-    var newOrderArray = this.state.sequences.map( (sequence, index) => ({id: sequence._id, order_index: index}) )
-    Requests.put('/sequence/reorder', { sequenceOrder: newOrderArray }).then(() => console.log('done'))
   }
 
   render() {

@@ -47,11 +47,8 @@ class SequenceCreate extends React.Component {
     event && event.preventDefault()
     let state = SequenceFormStore.getState()
     if (state.name && state.colorSequence.length > 2) {
-     Requests.put('/sequence', { sequence: {
-         name: state.name,
-         colorSequence: state.colorSequence
-       }
-     }).then(() => this.props.history.push('/'))
+      let requestObj = { sequence: SequenceFormStore.getState() }
+      Requests.put('/sequence', requestObj).then(() => this.props.history.push('/'))
     }
   }
 
