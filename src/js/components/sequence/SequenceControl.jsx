@@ -9,6 +9,7 @@ import SequencePreview from 'sequence/SequencePreview'
 import SequenceActionsButtonGroup from 'sequence/SequenceActionsButtonGroup'
 
 import SequenceFormStore from 'stores/SequenceFormStore'
+import SettingsConfig from 'components/SettingsConfig'
 import { initSequence, setSequence }  from 'actions/SequenceFormActions'
 
 const totalDuration = (sequence) =>  sequence.colorSequence.reduce((sum, next) => sum + next.duration, 0)
@@ -94,7 +95,7 @@ class SequenceControl extends React.Component {
       this.setState({ sequences: reordered })
     })
   }
-
+  
   render() {
     return (
       <div className="SequenceControl">
@@ -117,12 +118,15 @@ class SequenceControl extends React.Component {
               <h4> Conclude Show </h4>
             </div>
             <div className="six columns">
-              Users will be re-routed to the Liberty Light Show survey 
+              Users will be re-routed to the exit landing page (configured below)
              </div>
             <div className="three columns">
               <Button color="danger" className="float-right" onClick={this.onConcludeShow}>Conclude The Show</Button>
             </div>
         </div>
+
+        <hr />
+        <SettingsConfig />
       </div>
     )
   }
