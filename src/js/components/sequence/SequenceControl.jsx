@@ -81,8 +81,12 @@ class SequenceControl extends React.Component {
       this.setState({sequences: splicedList})
     })
   }
-  onConcludeShow() {
-    Requests.put('/conclude')
+  onConcludeShow(event) {
+    var target = event.target
+    Requests.put('/conclude').then(() => {
+      target.disabled = true
+      setTimeout(() => target.disabled = false, 2500)
+    })
   }
   onEnableSort() {
     this.setState({enableSort: !this.state.enableSort})
