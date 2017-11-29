@@ -5,7 +5,8 @@ import LoginPage from 'components/LoginPage'
 import SequenceHome from 'sequence/SequenceHome'
 import SequenceCreate from 'sequence/SequenceCreate'
 
-const HomePage = (props) => (
+const HomePage = (props) => {
+  return (
   <BrowserRouter>
 
     <div className="HomePage">
@@ -21,5 +22,6 @@ const HomePage = (props) => (
 
   </BrowserRouter>
 )
+}
 
 export default HomePage

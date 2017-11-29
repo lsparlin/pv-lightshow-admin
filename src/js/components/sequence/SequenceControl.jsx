@@ -16,7 +16,7 @@ const totalDuration = (sequence) =>  sequence.colorSequence.reduce((sum, next) =
 
 const DragHandle = SortableHandle( ({className}) => <span className={className + ' fa fa-bars'}></span>)
 
-const SequenceItem = SortableElement( ({sequence, itemIndex, enableButtons, enableSort, startSequence, onDelete, onEdit}) => 
+const SequenceItem = SortableElement( ({sequence, settings, itemIndex, enableButtons, enableSort, startSequence, onDelete, onEdit}) => 
   <div className="sequence row">
       <div className="three columns">
         <h4> <DragHandle className={classNames({'drag-handle': true, 'hide': !enableSort})} /> {sequence.name} </h4>
@@ -28,15 +28,17 @@ const SequenceItem = SortableElement( ({sequence, itemIndex, enableButtons, enab
       <div className="three columns">
         <SequenceActionsButtonGroup enableButtons={enableButtons} startSequence={() => startSequence(sequence._id)} 
           onDelete={() => onDelete(sequence._id, itemIndex)} 
-          onEdit={() => onEdit(sequence)}/>
+          onEdit={() => onEdit(sequence)} 
+          settings={settings} />
       </div>
   </div>
 )
 
-const SequenceList = SortableContainer( ({sequences, enableButtons, enableSort, startSequence, onDelete, onEdit}) => 
+const SequenceList = SortableContainer( ({sequences, settings, enableButtons, enableSort, startSequence, onDelete, onEdit}) => 
   <div className="sequence-list">
     { sequences.map( (sequence, index) => 
-      <SequenceItem key={`item-${index}`} index={index} sequence={sequence} itemIndex={index} enableButtons={enableButtons} enableSort={enableSort} 
+      <SequenceItem key={`item-${index}`} index={index} sequence={sequence} settings={settings} itemIndex={index} 
+        enableButtons={enableButtons} enableSort={enableSort} 
         startSequence={startSequence} 
         onDelete={onDelete} 
         onEdit={onEdit} />
@@ -47,7 +49,7 @@ const SequenceList = SortableContainer( ({sequences, enableButtons, enableSort, 
 class SequenceControl extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {sequences: props.sequences, enableButtons: true, enableSort: false};
+    this.state = {sequences: props.sequences, settings: props.settings, enableButtons: true, enableSort: false};
     this.startSequence = this.startSequence.bind(this)
     this.onCreateClick = this.onCreateClick.bind(this)
     this.onEditClick = this.onEditClick.bind(this)
@@ -112,7 +114,8 @@ class SequenceControl extends React.Component {
             </button>
           </div>
         </div>
-        <SequenceList sequences={this.state.sequences} enableButtons={this.state.enableButtons} enableSort={this.state.enableSort} useDragHandle={true} 
+        <SequenceList sequences={this.state.sequences} settings={this.state.settings} 
+          enableButtons={this.state.enableButtons} enableSort={this.state.enableSort} useDragHandle={true} 
           onSortEnd={this.onSortEnd}
           startSequence={this.startSequence} 
           onDelete={this.onDelete} 
@@ -130,7 +133,7 @@ class SequenceControl extends React.Component {
         </div>
 
         <hr />
-        <SettingsConfig />
+        <SettingsConfig settings={this.state.settings} />
       </div>
     )
   }

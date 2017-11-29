@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import Requests from 'helpers/Requests'
 
@@ -6,18 +7,16 @@ class SettingsConfig extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      introductoryText: '',
-      conclusionUrl: ''
-    }
+    this.state = props.settings
     this.onIntroTextChange = this.onIntroTextChange.bind(this)
     this.saveIntroTextSetting = this.saveIntroTextSetting.bind(this)
     this.onConclusionUrlChange = this.onConclusionUrlChange.bind(this)
     this.saveConclusionUrlSetting = this.saveConclusionUrlSetting.bind(this)
+    this.saveEditingLockedSetting = this.saveEditingLockedSetting.bind(this)
   }
   componentWillMount() {
-    Requests.get('/settings').then(response => {
-      this.setState(response.data)
+    Requests.get('/user_info').then(response => {
+      this.setState({user_is_master: response.data.is_master})
     })
   }
 
@@ -37,6 +36,11 @@ class SettingsConfig extends React.Component {
   saveConclusionUrlSetting() {
     Requests.put('/settings/put_one', {setting: {name: 'conclusionUrl', value: this.state.conclusionUrl}}).then(() => {
       this.setState( {conclusionUrlDirty: false} )
+    })
+  }
+  saveEditingLockedSetting() {
+    Requests.put('/settings/put_one', {setting: {name: 'editingLocked', value: !this.state.editingLocked}}).then(() => {
+      this.setState({editingLocked: !this.state.editingLocked})
     })
   }
 
@@ -64,6 +68,17 @@ class SettingsConfig extends React.Component {
             { this.state.conclusionUrlDirty && <button className="button-primary" onClick={this.saveConclusionUrlSetting}>Save</button> }
           </div>
         </div>
+
+        { this.state.user_is_master && 
+            <div className="card u-full-width margin-bottom-1m">
+              <div className="card-header"> <strong>Global Lockdown</strong> </div>
+              <div className="card-body">
+                <button className="btn btn-danger" onClick={this.saveEditingLockedSetting}> Lockdown Editing&nbsp;
+                  <span className={classNames({'fa fa-lg': true, 'fa-circle': this.state.editingLocked, 'fa-circle-thin': !this.state.editingLocked})}></span> 
+                </button>
+              </div>
+            </div>
+        }
       </div>
     )
   }
