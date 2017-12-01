@@ -51,6 +51,7 @@ class SequenceControl extends React.Component {
     super(props);
     this.state = {sequences: props.sequences, settings: props.settings, enableButtons: true, enableSort: false};
     this.startSequence = this.startSequence.bind(this)
+    this.stopSequence = this.stopSequence.bind(this)
     this.onCreateClick = this.onCreateClick.bind(this)
     this.onEditClick = this.onEditClick.bind(this)
     this.onDelete = this.onDelete.bind(this)
@@ -66,6 +67,11 @@ class SequenceControl extends React.Component {
       setTimeout(() => {
         this.setState({enableButtons: true})
       }, total * 1000)
+    })
+  }
+  stopSequence() {
+    Requests.put('/sequence/stop').then(() => {
+      this.setState({enableButtons: true})
     })
   }
   onCreateClick() {
@@ -134,6 +140,14 @@ class SequenceControl extends React.Component {
 
         <hr />
         <SettingsConfig settings={this.state.settings} />
+
+        
+        <div className="row">
+          <div className="nine columns"></div>
+          <button className="btn btn-danger three columns" onClick={this.stopSequence}>
+            <span className="fa fa-stop"></span>&nbsp;&nbsp; Stop Sequence 
+          </button>
+        </div>
       </div>
     )
   }
